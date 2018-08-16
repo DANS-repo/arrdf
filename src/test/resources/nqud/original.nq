@@ -1,0 +1,5 @@
+<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/country> "The Netherlands" .
+<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/longitude> "436052"^^<http://schema.org/longitude> .
+<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://timbuctoo.huygens.knaw.nl/datasets/clusius/Places> .
+<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/latitude> "5200951"^^<http://schema.org/latitude> .
+<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/original_id> "PL00000029" .

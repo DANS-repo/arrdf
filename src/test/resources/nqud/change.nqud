@@ -1,0 +1,9 @@
+--- my_datafile.nq    2017-08-18 12:08:18.772264550 +0200
++++ update.nq  2017-07-19 11:18:16.057104790 +0200
+@@ -0,0 +1,35652 @@
++<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/country> "The Netherland" .
+-<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/country> "The Netherlands" .
++<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/longitude> "436052"^^<http://schema.org/longitude> .
++<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://timbuctoo.huygens.knaw.nl/datasets/clusius/Places> .
++<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/latitude> "5200951"^^<http://schema.org/latitude> .
++<http://timbuctoo.huygens.knaw.nl/datasets/clusius/Place_PL00000029> <http://timbuctoo.huygens.knaw.nl/properties/original_id> "PL00000029" .
