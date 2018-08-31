@@ -1,17 +1,23 @@
 package nl.knaw.dans.repo.arrdf.nqud;
 
 import org.eclipse.rdf4j.model.Statement;
+import org.eclipse.rdf4j.rio.ParserConfig;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.eclipse.rdf4j.rio.RDFParseException;
 import org.eclipse.rdf4j.rio.RDFParser;
 import org.eclipse.rdf4j.rio.RDFParserFactory;
+import org.eclipse.rdf4j.rio.RioSetting;
+import org.eclipse.rdf4j.rio.helpers.BasicParserSettings;
 import org.eclipse.rdf4j.rio.helpers.NTriplesParserSettings;
 import org.eclipse.rdf4j.rio.nquads.NQuadsParser;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.util.Stack;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -34,8 +40,21 @@ public class NQuadsUDParser extends NQuadsParser {
     );
     private Stack<Integer> actions;
 
+    private int plusStatementCount;
+    private int minusStatementCount;
+
     public NQuadsUDParser() {
         actions = new Stack<>();
+        ParserConfig config = getParserConfig();
+        config.set(BasicParserSettings.NORMALIZE_DATATYPE_VALUES, true);
+        config.set(BasicParserSettings.NORMALIZE_LANGUAGE_TAGS, true);
+        config.set(BasicParserSettings.PRESERVE_BNODE_IDS, true);
+    }
+
+    public synchronized void parse(URL url, String baseUri) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
+            parse(reader, baseUri);
+        }
     }
 
     @Override
@@ -67,7 +86,7 @@ public class NQuadsUDParser extends NQuadsParser {
                     int action = character;
                     character = readCodePoint();
                     if (character == '<' || character == '_') {
-                        actions.push(action);
+                        setAction(action);
                     } else {
                         character = skipLine(character);
                     }
@@ -84,6 +103,15 @@ public class NQuadsUDParser extends NQuadsParser {
 
         if (rdfHandler != null) {
             rdfHandler.endRDF();
+        }
+    }
+
+    private void setAction(int action) {
+        actions.push(action);
+        if (action == '+') {
+            plusStatementCount++;
+        } else {
+            minusStatementCount++;
         }
     }
 
@@ -163,6 +191,14 @@ public class NQuadsUDParser extends NQuadsParser {
 
     public boolean isAssertion() {
         return actions.pop() == '+';
+    }
+
+    public int getPlusStatementCount() {
+        return plusStatementCount;
+    }
+
+    public int getMinusStatementCount() {
+        return minusStatementCount;
     }
 
     @Override

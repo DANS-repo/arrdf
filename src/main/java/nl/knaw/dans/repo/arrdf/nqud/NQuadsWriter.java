@@ -6,7 +6,9 @@ import org.eclipse.rdf4j.rio.RDFHandler;
 import org.eclipse.rdf4j.rio.RDFHandlerException;
 import org.eclipse.rdf4j.rio.RDFWriter;
 import org.eclipse.rdf4j.rio.Rio;
+import org.eclipse.rdf4j.rio.helpers.BasicParserSettings;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,11 +39,17 @@ public class NQuadsWriter implements RDFHandler {
     }
 
     private void startWriter() throws FileNotFoundException {
-        out = new FileOutputStream(newFileName());
+        File file = new File(newFileName());
+        File dirPath = file .getParentFile();
+        assert dirPath.exists() || dirPath.mkdirs();
+        out = new FileOutputStream(file);
         writer = Rio.createWriter(RDFFormat.NQUADS, out);
+        writer.set(BasicParserSettings.NORMALIZE_LANGUAGE_TAGS, true);
+        writer.set(BasicParserSettings.NORMALIZE_LANGUAGE_TAGS, true);
+        writer.set(BasicParserSettings.PRESERVE_BNODE_IDS, true);
     }
 
-    public NQuadsWriter maxStatementsInFile(int maxStatements) {
+    public NQuadsWriter withMaxStatementsInFile(int maxStatements) {
         maxStatementsInFile = maxStatements;
         return this;
     }
